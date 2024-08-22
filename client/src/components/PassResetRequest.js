@@ -17,7 +17,7 @@ const PasswordResetRequest = () => {
   
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/authenticate/reset-password-request', { email ,username});
+      const response = await axios.post('https://url-shortener-zmi5.onrender.com/authenticate/reset-password-request', { email ,username});
       setMessage(response.data.message);
     } catch (e) {
       setMessage(e.response?.data?.error);

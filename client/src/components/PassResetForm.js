@@ -15,7 +15,7 @@ const PasswordResetForm = () => {
     }
 
     try {
-      const response = await axios.post(`http://localhost:5000/authenticate/reset-password/${token}`, { password });
+      const response = await axios.post(`https://url-shortener-zmi5.onrender.com/authenticate/reset-password/${token}`, { password });
       setMessage(response.data.message);
       setSuccess(true);
     } catch (e) {

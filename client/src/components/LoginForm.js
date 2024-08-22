@@ -19,7 +19,7 @@ const LoginForm = ({ onAuthSuccess, handleClose }) => {
     
 
     e.preventDefault();
-    const endpoint = isLogin ? 'http://localhost:5000/authenticate/login' : 'http://localhost:5000/authenticate/signup';
+    const endpoint = isLogin ? 'https://url-shortener-zmi5.onrender.com/authenticate/login' : 'https://url-shortener-zmi5.onrender.com/authenticate/signup';
     try {
       const response = await axios.post(endpoint, { username, password });
       if (response.status===201 && isLogin) {

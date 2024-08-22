@@ -14,7 +14,7 @@ const Dashboard = ({ username, token }) => {
   }, []);
 
   function urlmaker(shortid){
-     const generatedurl=`http://localhost:5000/r/${shortid}`;
+     const generatedurl=`https://url-shortener-zmi5.onrender.com/r/${shortid}`;
      return generatedurl;
   }
   const config = {
@@ -25,7 +25,7 @@ const Dashboard = ({ username, token }) => {
   const fetchUrls = async () => {
     // Fetch the URLs from the backend
     try{
-        const response = await axios.get('http://localhost:5000/urls',config);
+        const response = await axios.get('https://url-shortener-zmi5.onrender.com/urls',config);
         setUrls(response.data.entries);
     }
     catch(e){
@@ -35,7 +35,7 @@ const Dashboard = ({ username, token }) => {
 
   const generateShortUrl = async () => {
     try{
-        const response = await axios.post('http://localhost:5000/urls', { url: redirectUrl }, config);
+        const response = await axios.post('https://url-shortener-zmi5.onrender.com/urls', { url: redirectUrl }, config);
         const shorturl=urlmaker(response.data.shortid);
         setShortUrl(shorturl);
         setNewLink(true); 
@@ -49,7 +49,7 @@ const Dashboard = ({ username, token }) => {
   };
  const deleteUrl=async (id)=>{
   try{
-        const response=await axios.delete(`http://localhost:5000/urls/${id}`,config);
+        const response=await axios.delete(`https://url-shortener-zmi5.onrender.com/urls/${id}`,config);
         if(response.data.success){
           fetchUrls();
         } 
