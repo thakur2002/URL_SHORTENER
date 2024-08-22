@@ -11,6 +11,7 @@ const Dashboard = ({ username, token }) => {
 
   useEffect(() => {
     fetchUrls();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function urlmaker(shortid){
@@ -78,9 +79,9 @@ const Dashboard = ({ username, token }) => {
           <button onClick={generateShortUrl} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded">Generate Short URL</button>
         </div>
       ) : (
-        <div  className="mb-8 w-full flex justify-between items-center max-w-xs sm:max-w-md">
-          <p className='text-white'><span>Your short URL is:</span><a href={shortUrl} target='_blank'className="text-blue-400 underline ml-4">{shortUrl}</a></p>
-          <button onClick={handleNewLink} c className="w-auto bg-green-600 hover:bg-green-800 text-white px-4 py-2 rounded">New Link</button>
+        <div  className="mb-8 flex justify-between items-center mx-auto gap-5">
+          <p className='text-white'><span>Your short URL is:</span><a href={shortUrl} target='_blank' rel="noreferrer"className="text-blue-400 underline ml-4">{shortUrl}</a></p>
+          <button onClick={handleNewLink} className="w-auto bg-green-600 hover:bg-green-800 text-white px-4 py-2 rounded">New Link</button>
         </div>
       )}
        <div  className="overflow-auto  max-h-80">
@@ -98,7 +99,7 @@ const Dashboard = ({ username, token }) => {
           {urls.map((url, index) => (
             <tr key={url._id}>
               <td className="p-2 sm:p-3 md:p-4  text-blue-500 ">{index + 1}</td>
-              <td className="p-2 sm:p-3 md:p-4  text-blue-500  break-words text-left"> <a href={urlmaker(url.shortId)} target='_blank'>{urlmaker(url.shortId)}</a></td>
+              <td className="p-2 sm:p-3 md:p-4  text-blue-500  break-words text-left"> <a href={urlmaker(url.shortId)} target='_blank' rel="noreferrer">{urlmaker(url.shortId)}</a></td>
               <td className="p-2 sm:p-3 md:p-4  text-white  break-words text-left">{url.redirectUrl}</td>
               <td className="p-2 sm:p-3 md:p-4  text-white  break-words text-center">{url.visitHistory.length}</td>
               <td className="p-2 sm:p-3 md:p-4  text-sm md:text-base text-center"><button className="bg-red-500  text-white hover:bg-red-700 active:bg-red-400 font-bold py-2 px-4 rounded" onClick={()=>deleteUrl(url._id)}>Delete</button></td>

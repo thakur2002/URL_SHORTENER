@@ -65,7 +65,7 @@ router.post('/reset-password-request', async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour expiration
     await user.save();
 
-    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+    const resetUrl = `https://shortenmyurl-g90m.onrender.com/reset-password/${resetToken}`;
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
