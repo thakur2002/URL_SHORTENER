@@ -78,7 +78,7 @@ const Dashboard = ({ username, token }) => {
              className="w-auto p-2 border border-gray-600 rounded mr-0 sm:mr-4 mb-4 sm:mb-0"
           />
           <button onClick={generateShortUrl} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded">Generate Short URL</button>
-               setmessage(e.response?.data?.error);
+                {message && <p className='text-white my-2'>{message}</p>}
         </div>
       ) : (
         <div  className="mb-8 flex justify-between items-center mx-auto gap-5">
