@@ -43,4 +43,4 @@
   border: none;
 }
 
-tbody tr:hover {background-color: #02052b; cursor: pointer;}
+tbody tr a:hover {cursor:pointer; color: blue;}
