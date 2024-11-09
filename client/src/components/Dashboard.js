@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Dashboard = ({ username, token }) => {
+const Dashboard = ({ username}) => {
   const [redirectUrl, setRedirectUrl] = useState('');
   const [newLink, setNewLink] = useState(false);
   const [shortUrl, setShortUrl] = useState('');
   const [urls, setUrls] = useState([]);
-
+  const [message,setmessage]=useState("");
 
   useEffect(() => {
     fetchUrls();
@@ -18,15 +18,17 @@ const Dashboard = ({ username, token }) => {
      const generatedurl=`https://url-shortener-zmi5.onrender.com/r/${shortid}`;
      return generatedurl;
   }
-  const config = {
-    headers: {
-      'Authorization': `Bearer ${token}` 
-    }
-  }
+
+  // const config = {
+  //   headers: {
+  //     'Authorization': `Bearer ${token}` 
+  //   }
+  // }
+
   const fetchUrls = async () => {
     // Fetch the URLs from the backend
     try{
-        const response = await axios.get('https://url-shortener-zmi5.onrender.com/urls',config);
+        const response = await axios.get('https://url-shortener-zmi5.onrender.com/urls', { withCredentials: true });
         setUrls(response.data.entries);
     }
     catch(e){
@@ -36,7 +38,7 @@ const Dashboard = ({ username, token }) => {
 
   const generateShortUrl = async () => {
     try{
-        const response = await axios.post('https://url-shortener-zmi5.onrender.com/urls', { url: redirectUrl }, config);
+        const response = await axios.post('https://url-shortener-zmi5.onrender.com/urls', { url: redirectUrl }, { withCredentials: true });
         const shorturl=urlmaker(response.data.shortid);
         setShortUrl(shorturl);
         setNewLink(true); 
@@ -45,12 +47,13 @@ const Dashboard = ({ username, token }) => {
     }
     catch(e){
         console.log(e.response?.data?.error);
+        setmessage(e.response?.data?.error);
     }
    
   };
  const deleteUrl=async (id)=>{
   try{
-        const response=await axios.delete(`https://url-shortener-zmi5.onrender.com/urls/${id}`,config);
+        const response=await axios.delete(`https://url-shortener-zmi5.onrender.com/urls/${id}`, { withCredentials: true });
         if(response.data.success){
           fetchUrls();
         } 
@@ -77,6 +80,7 @@ const Dashboard = ({ username, token }) => {
              className="w-auto p-2 border border-gray-600 rounded mr-0 sm:mr-4 mb-4 sm:mb-0"
           />
           <button onClick={generateShortUrl} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded">Generate Short URL</button>
+          {message && <p className='text-white my-2'>{message}</p>}
         </div>
       ) : (
         <div  className="mb-8 flex justify-between items-center mx-auto gap-5">

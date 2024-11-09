@@ -28,6 +28,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+
 // Login route
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
@@ -44,7 +45,14 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign({ username: user.username}, process.env.Secret);
-    res.status(201).json({ token });
+    res.cookie('token', token, {
+      httpOnly: true,       // Prevent JavaScript access to the cookie
+      secure: process.env.NODE_ENV === 'production',        
+      sameSite: 'Strict',   // Prevent CSRF
+      maxAge: 3600000       // 1 hour expiration
+    });
+    res.status(201).json({ message: 'Login successful' });
+
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

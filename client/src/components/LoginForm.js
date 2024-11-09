@@ -1,4 +1,4 @@
-
+//src/components/LoginForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -21,9 +21,10 @@ const LoginForm = ({ onAuthSuccess, handleClose }) => {
     e.preventDefault();
     const endpoint = isLogin ? 'https://url-shortener-zmi5.onrender.com/authenticate/login' : 'https://url-shortener-zmi5.onrender.com/authenticate/signup';
     try {
-      const response = await axios.post(endpoint, { username, password });
+      const response = await axios.post(endpoint, { username, password }, { withCredentials: true });
       if (response.status===201 && isLogin) {
-        onAuthSuccess(response.data.token,username);
+        console.log(response.data.message);
+        onAuthSuccess(username);
       } else if(response.status===201 && !isLogin){
         setMessage(response.data.message);
       }

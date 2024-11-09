@@ -1,5 +1,6 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
@@ -10,20 +11,27 @@ import PasswordResetForm from './components/PassResetForm';
 import './App.css';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState('');
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
   const location = useLocation(); 
   const[logging,setLogging]=useState(false);
 
   useEffect(() => {
-    const savedtoken = localStorage.getItem('token');
-    const savedUsername = localStorage.getItem('username');
-    if (savedtoken) {
-      setToken(savedtoken);
-      setIsAuthenticated(true);
-      setUsername(savedUsername);
-    }
+    // const savedtoken = localStorage.getItem('token');
+    // const savedUsername = localStorage.getItem('username');
+    // if (savedtoken) {
+    //   setToken(savedtoken);
+    //   setIsAuthenticated(true);
+    //   setUsername(savedUsername);
+    // }
+    axios.get('https://url-shortener-zmi5.onrender.com/verifytoken', { withCredentials: true })
+    .then(response => {
+      if (response.data.authenticated) {
+        setUsername(response.data.username);
+        setIsAuthenticated(true);
+      }
+    })
+    .catch(() => setIsAuthenticated(false));
   }, []);
 
   const loginHandler = () => {
@@ -32,21 +40,23 @@ function App() {
     
   };
   
-  const handleAuthSuccess = (newtoken,newname) => {
-    setToken(newtoken);
+  const handleAuthSuccess = (newname) => {
+    
     setUsername(newname);
     setIsAuthenticated(true);
     setLogging(false);
-    localStorage.setItem('token', newtoken);
-    localStorage.setItem('username', newname)
-    
   };
 
   const logoutHandler = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    setIsAuthenticated(false);
-    navigate('/');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('username');
+    // setIsAuthenticated(false);
+    // navigate('/');
+    axios.post('https://url-shortener-zmi5.onrender.com/logout', { withCredentials: true }) // Invalidate token by clearing the cookie
+    .then(() => {
+      setIsAuthenticated(false);
+      navigate('/');
+    });
   };
 
   return (
@@ -66,7 +76,7 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            isAuthenticated ? <Dashboard username={username} token={token}/> : <Navigate to="/" />
+            isAuthenticated ? <Dashboard username={username}/> : <Navigate to="/" />
           }
         />
          <Route path="/reset-password-request" element={<PasswordResetRequest />} />
