@@ -1,5 +1,6 @@
 
 const Url=require('../models/url');
+
 const md5=require('md5');
 
 const base62Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -13,14 +14,13 @@ function base62encode(num) {
 }
 async function shorturlgenerator(req,res){
     try{
-        // const shortid=Math.random().toString(36).substring(2,6);
         
         let redirecturl=req.body.url;
         if(!redirecturl){
-            return res.status(400).json({error:"Give a valid url"});
-          }
-
-        if (redirecturl.substring(0, 8) === "https://") {
+          return res.status(400).json({error:"Give a valid url"});
+        }
+        
+         if (redirecturl.substring(0, 8) === "https://") {
             redirecturl = redirecturl.substring(8);
         } else if (redirecturl.substring(0, 7) === "http://") {
             redirecturl = redirecturl.substring(7);
