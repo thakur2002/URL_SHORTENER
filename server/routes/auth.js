@@ -47,9 +47,9 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ username: user.username}, process.env.Secret);
     res.cookie('token', token, {
       httpOnly: true,       // Prevent JavaScript access to the cookie
-      secure: process.env.NODE_ENV === 'production',        
-      sameSite: 'Strict',   // Prevent CSRF
-      maxAge: 3600000       // 1 hour expiration
+      secure: true,        
+      sameSite: 'None',    // Allow cookies in cross-site contexts
+      maxAge: 172800000       // 2 day expiration
     });
     res.status(201).json({ message: 'Login successful' });
 
