@@ -104,7 +104,7 @@ const Dashboard = ({ username}) => {
             <tr key={url._id}>
               <td className="p-2 sm:p-3 md:p-4  text-blue-500 ">{index + 1}</td>
               <td className="p-2 sm:p-3 md:p-4  text-blue-500  break-words text-left"> <a href={urlmaker(url.shortId)} target='_blank' rel="noreferrer">{urlmaker(url.shortId)}</a></td>
-              <td className="p-2 sm:p-3 md:p-4  text-white  break-words text-left">{url.redirectUrl}</td>
+              <td className="p-2 sm:p-3 md:p-4  text-white  break-words text-left overflow-hidden" style={{ maxWidth: "200px", overflowWrap: "break-word" }}>{url.redirectUrl}</td>
               <td className="p-2 sm:p-3 md:p-4  text-white  break-words text-center">{url.visitHistory.length}</td>
               <td className="p-2 sm:p-3 md:p-4  text-sm md:text-base text-center"><button className="bg-red-500  text-white hover:bg-red-700 active:bg-red-400 font-bold py-2 px-4 rounded" onClick={()=>deleteUrl(url._id)}>Delete</button></td>
             </tr>
