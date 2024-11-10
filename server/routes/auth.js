@@ -46,6 +46,8 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ username: user.username}, process.env.Secret);
     res.cookie('token', token, {
+      domain: '.onrender.com',
+      path: '/',
       httpOnly: true,       // Prevent JavaScript access to the cookie
       secure: true,        
       sameSite: 'None',    // Allow cookies in cross-site contexts
